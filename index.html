@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bijaya | Data Engineer</title>
+    <script>
+        // Mark JS as available (enables entrance/reveal animations) and set theme
+        // before paint to avoid a flash of the wrong mode or un-animated content.
+        document.documentElement.classList.add('js');
+        (function () {
+            try {
+                var t = localStorage.getItem('theme');
+                if (t !== 'light' && t !== 'dark') {
+                    t = 'dark';  // dark is the default brand experience (gold shines on dark)
+                }
+                document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Bijaya</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#gallery">Photography</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-social">
+                <a href="https://github.com" target="_blank">GitHub</a>
+                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode" title="Toggle theme">
+                    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-avatar">
+                    <img src="assets/profile.jpg" alt="Bijaya — Data Engineer" width="96" height="96" />
+                </div>
+                <p class="hero-greeting">Hello, I'm</p>
+                <h1 class="hero-title">Bijaya</h1>
+                <h2 class="hero-subtitle">Data Engineer</h2>
+                <p class="hero-description">
+                    I build the infrastructure that turns raw data into stories.
+                    Every great data-driven decision starts with a pipeline someone carefully designed.
+                    That someone is me.
+                </p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Let's Talk</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="data-flow">
+                    <div class="node node-1" data-label="Extract">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                            <path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/>
+                            <path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/>
+                        </svg>
+                    </div>
+                    <div class="node node-2" data-label="Transform">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/>
+                            <path d="m18 2 4 4-4 4"/>
+                            <path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/>
+                            <path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/>
+                            <path d="m18 14 4 4-4 4"/>
+                        </svg>
+                    </div>
+                    <div class="node node-3" data-label="Load">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                    </div>
+                    <svg class="connections" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0" stop-color="#b88a00"/>
+                                <stop offset="0.5" stop-color="#f9c809"/>
+                                <stop offset="1" stop-color="#f2a900"/>
+                            </linearGradient>
+                        </defs>
+                        <path class="connection-line" d="M30,100 Q100,50 170,100" />
+                        <path class="connection-line" d="M30,100 Q100,150 170,100" />
+                    </svg>
+                    <!-- Data packets flowing Extract -> Transform -> Load (CSS offset-path) -->
+                    <span class="data-packet flow-top" style="animation-delay: 0s"></span>
+                    <span class="data-packet flow-top" style="animation-delay: 1.2s"></span>
+                    <span class="data-packet flow-bottom" style="animation-delay: 0.6s"></span>
+                    <span class="data-packet flow-bottom" style="animation-delay: 1.8s"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Where I Come In -->
+    <section id="skills" class="skills">
+        <div class="section-container">
+            <h2 class="section-title reveal">Where I Come In</h2>
+            <p class="section-subtitle reveal">
+                Companies sit on mountains of data. I help them climb it.
+            </p>
+            <div class="skills-grid">
+                <div class="skill-card reveal" data-aos="fade-up">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>Data Pipelines</h3>
+                    <p>Building robust ETL/ELT pipelines that scale. From batch processing to real-time streaming, I design data flows that just work.</p>
+                    <ul class="skill-tags">
+                        <li>Apache Airflow</li>
+                        <li>Apache Spark</li>
+                        <li>Kafka</li>
+                    </ul>
+                </div>
+                <div class="skill-card reveal" data-aos="fade-up" data-aos-delay="100">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                        </svg>
+                    </div>
+                    <h3>Data Architecture</h3>
+                    <p>Designing data warehouses and lakes that make analysts smile. Structured for performance, built for growth.</p>
+                    <ul class="skill-tags">
+                        <li>Snowflake</li>
+                        <li>BigQuery</li>
+                        <li>Redshift</li>
+                    </ul>
+                </div>
+                <div class="skill-card reveal" data-aos="fade-up" data-aos-delay="200">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                    </div>
+                    <h3>Cloud Infrastructure</h3>
+                    <p>Deploying and managing data infrastructure on the cloud. Scalable, secure, and cost-effective solutions.</p>
+                    <ul class="skill-tags">
+                        <li>AWS</li>
+                        <li>GCP</li>
+                        <li>Azure</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How I Work -->
+    <section class="methodology">
+        <div class="section-container">
+            <h2 class="section-title reveal">How I Work</h2>
+            <div class="methodology-grid">
+                <div class="method-item reveal">
+                    <span class="method-number">01</span>
+                    <h3>Understand</h3>
+                    <p>I start by deeply understanding your data landscape. What do you have? What do you need? Where are the gaps?</p>
+                </div>
+                <div class="method-item reveal">
+                    <span class="method-number">02</span>
+                    <h3>Design</h3>
+                    <p>I architect solutions that balance immediate needs with future scalability. No over-engineering, no shortcuts.</p>
+                </div>
+                <div class="method-item reveal">
+                    <span class="method-number">03</span>
+                    <h3>Build</h3>
+                    <p>Clean code, thorough testing, comprehensive documentation. I build systems that others can maintain.</p>
+                </div>
+                <div class="method-item reveal">
+                    <span class="method-number">04</span>
+                    <h3>Iterate</h3>
+                    <p>Data needs evolve. I design for change and stay engaged to ensure systems grow with your business.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="projects">
+        <div class="section-container">
+            <h2 class="section-title reveal">Selected Projects</h2>
+            <p class="section-subtitle reveal">
+                A few highlights from my data engineering journey.
+            </p>
+            <div class="projects-grid">
+                <article class="project-card reveal">
+                    <div class="project-content">
+                        <span class="project-category">Data Pipeline</span>
+                        <h3>Real-Time Analytics Platform</h3>
+                        <p>Built a streaming data pipeline processing 1M+ events/day using Kafka and Spark Streaming, enabling real-time dashboards for business decisions.</p>
+                        <ul class="project-tech">
+                            <li>Apache Kafka</li>
+                            <li>Spark</li>
+                            <li>Python</li>
+                            <li>AWS</li>
+                        </ul>
+                        <a href="#" class="project-link">View Case Study <span class="arrow">&rarr;</span></a>
+                    </div>
+                </article>
+                <article class="project-card reveal">
+                    <div class="project-content">
+                        <span class="project-category">Data Warehouse</span>
+                        <h3>Enterprise Data Lake Migration</h3>
+                        <p>Led migration of 50TB legacy data warehouse to a modern lakehouse architecture, reducing query times by 70% and costs by 40%.</p>
+                        <ul class="project-tech">
+                            <li>Databricks</li>
+                            <li>Delta Lake</li>
+                            <li>Airflow</li>
+                            <li>dbt</li>
+                        </ul>
+                        <a href="#" class="project-link">View Case Study <span class="arrow">&rarr;</span></a>
+                    </div>
+                </article>
+                <article class="project-card reveal">
+                    <div class="project-content">
+                        <span class="project-category">MLOps</span>
+                        <h3>ML Feature Store</h3>
+                        <p>Designed and implemented a centralized feature store serving 20+ ML models, standardizing feature engineering across data science teams.</p>
+                        <ul class="project-tech">
+                            <li>Feast</li>
+                            <li>Python</li>
+                            <li>Redis</li>
+                            <li>Kubernetes</li>
+                        </ul>
+                        <a href="#" class="project-link">View Case Study <span class="arrow">&rarr;</span></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beyond the Data — Photography & Videography -->
+    <section id="gallery" class="gallery">
+        <div class="section-container">
+            <h2 class="section-title reveal">Beyond the Data</h2>
+            <p class="section-subtitle reveal">
+                When I step away from the pipelines, I'm behind a lens. A few frames and films I'm proud of.
+            </p>
+
+            <h3 class="gallery-heading reveal">Photography</h3>
+            <div class="gallery-grid">
+                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-1.jpg" data-caption="Untitled">
+                    <img src="assets/gallery/photo-1.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="gallery-caption">Untitled</span>
+                </button>
+                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-2.jpg" data-caption="Untitled">
+                    <img src="assets/gallery/photo-2.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="gallery-caption">Untitled</span>
+                </button>
+                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-3.jpg" data-caption="Untitled">
+                    <img src="assets/gallery/photo-3.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="gallery-caption">Untitled</span>
+                </button>
+                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-4.jpg" data-caption="Untitled">
+                    <img src="assets/gallery/photo-4.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="gallery-caption">Untitled</span>
+                </button>
+                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-5.jpg" data-caption="Untitled">
+                    <img src="assets/gallery/photo-5.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="gallery-caption">Untitled</span>
+                </button>
+                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-6.jpg" data-caption="Untitled">
+                    <img src="assets/gallery/photo-6.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="gallery-caption">Untitled</span>
+                </button>
+            </div>
+
+            <h3 class="gallery-heading reveal">Videography</h3>
+            <div class="video-grid">
+                <a class="video-card reveal" href="#" target="_blank" rel="noopener" aria-label="Play video">
+                    <div class="video-thumb">
+                        <img src="assets/gallery/video-1.jpg" alt="Video still" loading="lazy" onerror="this.classList.add('img-failed')" />
+                        <span class="video-play" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                    </div>
+                    <div class="video-meta">
+                        <h4>Film title</h4>
+                        <p>Short description &middot; 2:30</p>
+                    </div>
+                </a>
+                <a class="video-card reveal" href="#" target="_blank" rel="noopener" aria-label="Play video">
+                    <div class="video-thumb">
+                        <img src="assets/gallery/video-2.jpg" alt="Video still" loading="lazy" onerror="this.classList.add('img-failed')" />
+                        <span class="video-play" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                    </div>
+                    <div class="video-meta">
+                        <h4>Film title</h4>
+                        <p>Short description &middot; 1:45</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume / CV -->
+    <section id="resume" class="resume">
+        <div class="section-container">
+            <h2 class="section-title reveal">Resume / CV</h2>
+            <p class="section-subtitle reveal">
+                The full story of my work, in one page. Download it or preview it in your browser.
+            </p>
+            <div class="resume-card reveal">
+                <div class="resume-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="8" y1="13" x2="16" y2="13"/>
+                        <line x1="8" y1="17" x2="16" y2="17"/>
+                        <line x1="8" y1="9" x2="10" y2="9"/>
+                    </svg>
+                </div>
+                <div class="resume-info">
+                    <h3>Bijaya — Data Engineer</h3>
+                    <p>PDF &middot; updated recently</p>
+                </div>
+                <div class="resume-actions">
+                    <a href="resume.pdf" download class="btn btn-primary">Download PDF</a>
+                    <a href="resume.pdf" target="_blank" rel="noopener" class="btn btn-secondary">Preview</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="section-container">
+            <h2 class="section-title reveal">Common Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item reveal">
+                    <button class="faq-question">
+                        <span>What's your tech stack preference?</span>
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>I'm tool-agnostic but experienced with Python, SQL, Spark, Airflow, and major cloud platforms. I choose technologies based on your specific needs, not personal preferences.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-question">
+                        <span>Do you work with small datasets too?</span>
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Good data engineering isn't about size - it's about reliability and scalability. I build systems that work well today and grow with you tomorrow.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-question">
+                        <span>Can you help with existing pipelines?</span>
+                        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely. I often audit and optimize existing data infrastructure. Sometimes a few strategic improvements can transform performance without a full rebuild.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <div class="section-container">
+            <h2 class="section-title reveal">Let's Build Something</h2>
+            <p class="contact-text">
+                Have a data challenge? I'd love to hear about it.<br>
+                Maybe I'm the engineer your data story needs.
+            </p>
+            <div class="contact-links">
+                <a href="mailto:bijaya@example.com" class="contact-link reveal">
+                    <span class="contact-label">Email</span>
+                    <span class="contact-value">bijaya@example.com</span>
+                </a>
+                <a href="https://linkedin.com" target="_blank" class="contact-link reveal">
+                    <span class="contact-label">LinkedIn</span>
+                    <span class="contact-value">Connect with me</span>
+                </a>
+                <a href="https://github.com" target="_blank" class="contact-link reveal">
+                    <span class="contact-label">GitHub</span>
+                    <span class="contact-value">View my code</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2024 Bijaya. Crafted with care.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
