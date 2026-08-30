@@ -4,10 +4,8 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    initNavigation();
+    initTabs();
     initFAQ();
-    initScrollAnimations();
-    initSmoothScroll();
     initDataFlowAnimation();
     initThemeToggle();
     initGallery();
@@ -62,50 +60,71 @@ function initGallery() {
 }
 
 /**
- * Navigation - Active state and scroll behavior
+ * Tabbed navigation — show one panel at a time instead of one long scroll.
+ * The active tab is chosen by the URL hash (so links are deep-linkable and
+ * back/forward work); everything else stays hidden.
  */
-function initNavigation() {
+function initTabs() {
+    const panels = document.querySelectorAll('.tab-panel');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
     const navbar = document.querySelector('.navbar');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    const sections = document.querySelectorAll('section[id]');
+    if (!panels.length) return;
 
-    // Navbar scroll effect
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
+    // Replay the reveal cascade each time a panel is shown.
+    function playReveals(panel) {
+        const groups = new Map();
+        panel.querySelectorAll('.reveal').forEach(el => {
+            const g = el.parentElement;
+            const i = groups.get(g) || 0;
+            el.style.setProperty('--reveal-i', i);
+            groups.set(g, i + 1);
+            el.classList.remove('is-visible');
+        });
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            panel.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+        }));
+    }
 
-        // Add shadow on scroll
-        if (currentScroll > 50) {
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            navbar.style.boxShadow = 'none';
+    function show(id) {
+        let target = document.getElementById(id);
+        if (!target || !target.classList.contains('tab-panel')) {
+            target = document.getElementById('home');
+            id = 'home';
         }
+        panels.forEach(p => p.classList.toggle('active', p === target));
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${id}`));
+        playReveals(target);
+        window.scrollTo(0, 0);
+    }
 
-        lastScroll = currentScroll;
-    });
-
-    // Active navigation link
-    const observerOptions = {
-        root: null,
-        rootMargin: '-50% 0px -50% 0px',
-        threshold: 0
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${id}`) {
-                        link.classList.add('active');
-                    }
-                });
+    // Intercept any in-page link that targets a tab (nav, logo, hero CTAs).
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (href.length < 2) return;
+            const id = href.slice(1);
+            const t = document.getElementById(id);
+            if (t && t.classList.contains('tab-panel')) {
+                e.preventDefault();
+                if (location.hash !== `#${id}`) {
+                    history.pushState(null, '', `#${id}`);
+                }
+                show(id);
             }
         });
-    }, observerOptions);
+    });
 
-    sections.forEach(section => observer.observe(section));
+    // Back/forward navigation between tabs.
+    window.addEventListener('popstate', () => show((location.hash || '#home').slice(1)));
+
+    // Subtle navbar shadow once a (tall) panel is scrolled.
+    window.addEventListener('scroll', () => {
+        navbar.style.boxShadow = window.pageYOffset > 20
+            ? '0 2px 20px rgba(0, 0, 0, 0.1)'
+            : 'none';
+    });
+
+    show((location.hash || '#home').slice(1));
 }
 
 /**
@@ -287,7 +306,7 @@ function toggleTheme() {
 function loadThemePreference() {
     let theme = localStorage.getItem('theme');
     if (theme !== 'light' && theme !== 'dark') {
-        theme = 'dark';  // dark is the default brand experience
+        theme = 'light';  // light-first, like the reference
     }
     document.documentElement.setAttribute('data-theme', theme);
 }

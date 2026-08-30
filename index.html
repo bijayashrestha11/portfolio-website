@@ -12,7 +12,7 @@
             try {
                 var t = localStorage.getItem('theme');
                 if (t !== 'light' && t !== 'dark') {
-                    t = 'dark';  // dark is the default brand experience (gold shines on dark)
+                    t = 'light';  // light-first, like the reference — minimal white canvas
                 }
                 document.documentElement.setAttribute('data-theme', t);
             } catch (e) {
@@ -23,24 +23,20 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">Bijaya</a>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#gallery">Photography</a></li>
-                <li><a href="#resume">Resume</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#projects">Portfolio</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="#photography">Photography</a></li>
             </ul>
             <div class="nav-social">
-                <a href="https://github.com" target="_blank">GitHub</a>
-                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
                 <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode" title="Toggle theme">
                     <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -61,215 +57,252 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <div class="hero-avatar">
-                    <img src="assets/profile.jpg" alt="Bijaya — Data Engineer" width="96" height="96" />
-                </div>
-                <p class="hero-greeting">Hello, I'm</p>
-                <h1 class="hero-title">Bijaya</h1>
-                <h2 class="hero-subtitle">Data Engineer</h2>
-                <p class="hero-description">
-                    I build the infrastructure that turns raw data into stories.
-                    Every great data-driven decision starts with a pipeline someone carefully designed.
-                    That someone is me.
-                </p>
-                <div class="hero-cta">
-                    <a href="#projects" class="btn btn-primary">View My Work</a>
-                    <a href="#contact" class="btn btn-secondary">Let's Talk</a>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="data-flow">
-                    <div class="node node-1" data-label="Extract">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                            <path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/>
-                            <path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/>
-                        </svg>
-                    </div>
-                    <div class="node node-2" data-label="Transform">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/>
-                            <path d="m18 2 4 4-4 4"/>
-                            <path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/>
-                            <path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/>
-                            <path d="m18 14 4 4-4 4"/>
-                        </svg>
-                    </div>
-                    <div class="node node-3" data-label="Load">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                            <polyline points="17 8 12 3 7 8"/>
-                            <line x1="12" y1="3" x2="12" y2="15"/>
-                        </svg>
-                    </div>
-                    <svg class="connections" viewBox="0 0 200 200">
-                        <defs>
-                            <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0" stop-color="#b88a00"/>
-                                <stop offset="0.5" stop-color="#f9c809"/>
-                                <stop offset="1" stop-color="#f2a900"/>
-                            </linearGradient>
-                        </defs>
-                        <path class="connection-line" d="M30,100 Q100,50 170,100" />
-                        <path class="connection-line" d="M30,100 Q100,150 170,100" />
-                    </svg>
-                    <!-- Data packets flowing Extract -> Transform -> Load (CSS offset-path) -->
-                    <span class="data-packet flow-top" style="animation-delay: 0s"></span>
-                    <span class="data-packet flow-top" style="animation-delay: 1.2s"></span>
-                    <span class="data-packet flow-bottom" style="animation-delay: 0.6s"></span>
-                    <span class="data-packet flow-bottom" style="animation-delay: 1.8s"></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Where I Come In -->
-    <section id="skills" class="skills">
+    <!-- Home tab: hero + what I do + how I work -->
+    <div class="tab-panel active" id="home">
+    <!-- About: who I am -->
+    <section class="about">
         <div class="section-container">
-            <h2 class="section-title reveal">Where I Come In</h2>
-            <p class="section-subtitle reveal">
-                Companies sit on mountains of data. I help them climb it.
+            <div class="about-head reveal">
+                <img class="about-avatar" src="assets/profile.jpg" alt="Bijaya Shrestha" width="64" height="64" onerror="this.classList.add('img-failed')" />
+                <div>
+                    <h2 class="about-greeting">Hey, I'm Bijaya <span class="wave" aria-hidden="true">&#128075;</span></h2>
+                    <p class="about-role">Data Engineer &middot; Computer Engineering, IOE Pulchowk &middot; Kathmandu, Nepal</p>
+                </div>
+            </div>
+
+            <p class="about-lead reveal">
+                I build the infrastructure that turns raw data into stories. Every good data-driven
+                decision starts with a pipeline someone carefully designed &mdash; I like being that someone.
             </p>
-            <div class="skills-grid">
-                <div class="skill-card reveal" data-aos="fade-up">
-                    <div class="skill-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <h3>Data Pipelines</h3>
-                    <p>Building robust ETL/ELT pipelines that scale. From batch processing to real-time streaming, I design data flows that just work.</p>
-                    <ul class="skill-tags">
-                        <li>Apache Airflow</li>
-                        <li>Apache Spark</li>
-                        <li>Kafka</li>
-                    </ul>
-                </div>
-                <div class="skill-card reveal" data-aos="fade-up" data-aos-delay="100">
-                    <div class="skill-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-                        </svg>
-                    </div>
-                    <h3>Data Architecture</h3>
-                    <p>Designing data warehouses and lakes that make analysts smile. Structured for performance, built for growth.</p>
-                    <ul class="skill-tags">
-                        <li>Snowflake</li>
-                        <li>BigQuery</li>
-                        <li>Redshift</li>
-                    </ul>
-                </div>
-                <div class="skill-card reveal" data-aos="fade-up" data-aos-delay="200">
-                    <div class="skill-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                            <line x1="8" y1="21" x2="16" y2="21"/>
-                            <line x1="12" y1="17" x2="12" y2="21"/>
-                        </svg>
-                    </div>
-                    <h3>Cloud Infrastructure</h3>
-                    <p>Deploying and managing data infrastructure on the cloud. Scalable, secure, and cost-effective solutions.</p>
-                    <ul class="skill-tags">
-                        <li>AWS</li>
-                        <li>GCP</li>
-                        <li>Azure</li>
-                    </ul>
+
+            <p class="about-para reveal">
+                I grew up in Nepal and studied Computer Engineering at IOE, Pulchowk Campus. Since then I've
+                worn a few different hats &mdash; data analyst, data scientist, and now data engineer &mdash;
+                building everything from forecasting models and computer-vision apps to healthcare data
+                pipelines. What I love most is the moment messy, scattered data finally clicks into something
+                people can actually use.
+            </p>
+
+            <div class="about-gallery reveal">
+                <figure class="photo-slot">
+                    <img src="assets/about/photo-1.jpg" alt="Bijaya with his motorbike by a lake in the Annapurna region" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="photo-hint">A photo of you</span>
+                </figure>
+                <figure class="photo-slot">
+                    <img src="assets/about/photo-2.jpg" alt="Bijaya carrying his camera on a pine-forest trail beneath a snow peak" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="photo-hint">Something you love</span>
+                </figure>
+                <figure class="photo-slot">
+                    <img src="assets/about/photo-3.jpg" alt="Bijaya walking with a tripod through a mountain valley" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="photo-hint">A moment that's you</span>
+                </figure>
+            </div>
+
+            <h2 class="about-subhead reveal">When I'm not wrangling data</h2>
+            <p class="about-para reveal">
+                You'll usually find me on a trail. I love trekking through the mountains with my friends &mdash;
+                long walks, big views, and the kind of conversations that only happen at altitude. I bring a
+                camera along every time, so I come home with photos and little films of those adventures.
+            </p>
+
+            <div class="about-gallery treks reveal">
+                <figure class="photo-slot">
+                    <img src="assets/trek/trek-1.jpg" alt="Descending a high trail with a trekking pole, snow peaks behind" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="photo-hint">On the trail</span>
+                </figure>
+                <figure class="photo-slot">
+                    <img src="assets/trek/trek-2.jpg" alt="Two trekkers pausing on the trail beneath a snow-covered wall" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="photo-hint">The crew</span>
+                </figure>
+                <figure class="photo-slot">
+                    <img src="assets/trek/trek-3.jpg" alt="A pine-lined trail opening to a snow peak" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="photo-hint">The view up top</span>
+                </figure>
+                <figure class="photo-slot video-slot">
+                    <video controls preload="none" playsinline poster="assets/trek/trek-video.jpg" aria-label="A short film from the Annapurna trek">
+                        <source src="assets/trek/trek-video.mp4" type="video/mp4">
+                    </video>
+                </figure>
+            </div>
+            <p class="about-note reveal">More frames and films live in the <a href="#photography">Photography</a> tab.</p>
+
+            <!-- Connect (like the reference's first page) -->
+            <div class="about-connect reveal">
+                <span class="about-connect-label">Connect with me</span>
+                <div class="connect-icons">
+                    <a href="https://www.linkedin.com/in/bijaya-shrestha-9b0800248/" target="_blank" rel="noopener" class="connect-link" aria-label="LinkedIn" title="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="connect-link" aria-label="Instagram" title="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>
+                    </a>
+                    <a href="mailto:shrestha.bj2056@gmail.com" class="connect-link" aria-label="Email" title="shrestha.bj2056@gmail.com">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
+    </div><!-- /#home tab -->
 
-    <!-- How I Work -->
-    <section class="methodology">
+    <!-- Work tab: professional experience -->
+    <section id="work" class="resume tab-panel">
         <div class="section-container">
-            <h2 class="section-title reveal">How I Work</h2>
-            <div class="methodology-grid">
-                <div class="method-item reveal">
-                    <span class="method-number">01</span>
-                    <h3>Understand</h3>
-                    <p>I start by deeply understanding your data landscape. What do you have? What do you need? Where are the gaps?</p>
-                </div>
-                <div class="method-item reveal">
-                    <span class="method-number">02</span>
-                    <h3>Design</h3>
-                    <p>I architect solutions that balance immediate needs with future scalability. No over-engineering, no shortcuts.</p>
-                </div>
-                <div class="method-item reveal">
-                    <span class="method-number">03</span>
-                    <h3>Build</h3>
-                    <p>Clean code, thorough testing, comprehensive documentation. I build systems that others can maintain.</p>
-                </div>
-                <div class="method-item reveal">
-                    <span class="method-number">04</span>
-                    <h3>Iterate</h3>
-                    <p>Data needs evolve. I design for change and stay engaged to ensure systems grow with your business.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects -->
-    <section id="projects" class="projects">
-        <div class="section-container">
-            <h2 class="section-title reveal">Selected Projects</h2>
+            <h2 class="section-title reveal">Work</h2>
             <p class="section-subtitle reveal">
-                A few highlights from my data engineering journey.
+                The teams I've worked with, and what I built alongside them.
+            </p>
+
+            <div class="work-entry reveal">
+                <div class="work-head">
+                    <img class="work-logo" src="assets/logos/maitri.png" alt="" width="28" height="28" loading="lazy" onerror="this.style.display='none'">
+                    <h3 class="work-company">Maitri Holdings Services</h3>
+                </div>
+                <p class="work-role">Data Engineer &middot; August 2024 &ndash; Present</p>
+                <ul class="work-points">
+                    <li>I build and optimize SQL models that power US healthcare data analysis, helping teams make informed decisions from complex clinical data.</li>
+                    <li>I use dbt and Jinja templates to automate transformations, so our data modeling stays clean, tested, and repeatable.</li>
+                </ul>
+            </div>
+
+            <div class="work-entry reveal">
+                <div class="work-head">
+                    <img class="work-logo" src="assets/logos/locmatic.png" alt="" width="28" height="28" loading="lazy" onerror="this.style.display='none'">
+                    <h3 class="work-company">Locmatic</h3>
+                </div>
+                <p class="work-role">Associate Data Scientist &middot; March 2024 &ndash; August 2024</p>
+                <ul class="work-points">
+                    <li>I put LLMs and LangChain to work extracting structured menu data from messy sources &mdash; turning unstructured text into something pipelines could use.</li>
+                    <li>I made Snowflake our primary data store and wrote the advanced queries that kept extraction and analysis fast.</li>
+                </ul>
+            </div>
+
+            <div class="work-entry reveal">
+                <div class="work-head">
+                    <img class="work-logo" src="assets/logos/daraz.png" alt="" width="28" height="28" loading="lazy" onerror="this.style.display='none'">
+                    <h3 class="work-company">Daraz Nepal</h3>
+                </div>
+                <p class="work-role">Data Analyst Trainee &rarr; Fraud &amp; Automation Strategist &middot; July 2023 &ndash; March 2024</p>
+                <ul class="work-points">
+                    <li><strong>July 2023:</strong> I joined Daraz as a Data Analyst Trainee. I built forecasting models (TFT, AutoARIMA) for topline KPIs like daily active users, orders, and warehouse items &mdash; hitting 87% accuracy &mdash; and an image-based algorithm to find the best price among similar products.</li>
+                    <li><strong>January 2024:</strong> I moved into the Fraud and Automation Strategist role, where I automated price and expiry-date detection on product images with PaddleOCR and Jenkins &mdash; cutting manual verification time by 80%.</li>
+                </ul>
+            </div>
+
+            <div class="work-entry reveal">
+                <div class="work-head">
+                    <span class="work-logo work-logo-mono" aria-hidden="true">M</span>
+                    <h3 class="work-company">Mero School</h3>
+                </div>
+                <p class="work-role">DSA Course Developer &middot; 2022</p>
+                <ul class="work-points">
+                    <li>I created and launched a complete Data Structures &amp; Algorithms course &mdash; from fundamentals to the algorithms every computer engineer should know &mdash; which went live on MeroSchool to positive reviews.</li>
+                </ul>
+            </div>
+
+            <p class="work-more reveal">
+                Want the formal version? <a href="resume.pdf" target="_blank" rel="noopener">View full r&eacute;sum&eacute;</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Portfolio tab -->
+    <section id="projects" class="projects tab-panel">
+        <div class="section-container">
+            <h2 class="section-title reveal">Portfolio</h2>
+            <p class="section-subtitle reveal">
+                A few of the projects I'm most proud of &mdash; spanning computer vision, machine learning, and full-stack work.
             </p>
             <div class="projects-grid">
                 <article class="project-card reveal">
                     <div class="project-content">
-                        <span class="project-category">Data Pipeline</span>
-                        <h3>Real-Time Analytics Platform</h3>
-                        <p>Built a streaming data pipeline processing 1M+ events/day using Kafka and Spark Streaming, enabling real-time dashboards for business decisions.</p>
+                        <span class="project-category">Data Engineering</span>
+                        <h3>Tuva Graph Theory &mdash; Healthcare Knowledge Graph</h3>
+                        <p>Transforms relational patient data from Snowflake (the Tuva Health dataset) into a Neo4j knowledge graph &mdash; 248 patients, 6,780 encounters, 130K conditions &mdash; enabling comorbidity clustering, care-pathway analysis, and provider-network queries.</p>
                         <ul class="project-tech">
-                            <li>Apache Kafka</li>
-                            <li>Spark</li>
+                            <li>Snowflake</li>
+                            <li>Neo4j</li>
+                            <li>Cypher</li>
                             <li>Python</li>
-                            <li>AWS</li>
                         </ul>
-                        <a href="#" class="project-link">View Case Study <span class="arrow">&rarr;</span></a>
+                        <a href="https://github.com/bijayashrestha11/tuva_graph_theory" target="_blank" rel="noopener" class="project-link">View on GitHub <span class="arrow">&rarr;</span></a>
                     </div>
                 </article>
                 <article class="project-card reveal">
                     <div class="project-content">
-                        <span class="project-category">Data Warehouse</span>
-                        <h3>Enterprise Data Lake Migration</h3>
-                        <p>Led migration of 50TB legacy data warehouse to a modern lakehouse architecture, reducing query times by 70% and costs by 40%.</p>
+                        <span class="project-category">Responsible AI</span>
+                        <h3>Responsible AI Through Data Quality</h3>
+                        <p>A cheap, model-free missingness-disparity statistic computed at data ingestion that forecasts downstream fairness degradation <em>before</em> a model is trained. Benchmarked reproducibly across the Adult, COMPAS, and German Credit datasets.</p>
                         <ul class="project-tech">
-                            <li>Databricks</li>
-                            <li>Delta Lake</li>
-                            <li>Airflow</li>
-                            <li>dbt</li>
+                            <li>Python</li>
+                            <li>Fairness ML</li>
+                            <li>Data Quality</li>
+                            <li>Benchmarking</li>
                         </ul>
-                        <a href="#" class="project-link">View Case Study <span class="arrow">&rarr;</span></a>
+                        <a href="https://github.com/bijayashrestha11/responsible-ai-through-data-quality" target="_blank" rel="noopener" class="project-link">View on GitHub <span class="arrow">&rarr;</span></a>
                     </div>
                 </article>
                 <article class="project-card reveal">
                     <div class="project-content">
-                        <span class="project-category">MLOps</span>
-                        <h3>ML Feature Store</h3>
-                        <p>Designed and implemented a centralized feature store serving 20+ ML models, standardizing feature engineering across data science teams.</p>
+                        <span class="project-category">Computer Vision</span>
+                        <h3>Live Scene Descriptor for the Visually Impaired</h3>
+                        <p>A Flutter app that narrates what a live camera sees. Frames stream in real time over WebRTC to a GIT-base-vatex vision-language model, which describes the scene aloud to assist visually impaired users.</p>
                         <ul class="project-tech">
-                            <li>Feast</li>
-                            <li>Python</li>
-                            <li>Redis</li>
-                            <li>Kubernetes</li>
+                            <li>Flutter</li>
+                            <li>Computer Vision</li>
+                            <li>GIT-base-vatex</li>
+                            <li>WebRTC</li>
                         </ul>
-                        <a href="#" class="project-link">View Case Study <span class="arrow">&rarr;</span></a>
+                        <a href="https://github.com/bijayashrestha11/Live-Camera-Feed-Scene-Descriptor-for-Visually-Impaired" target="_blank" rel="noopener" class="project-link">View on GitHub <span class="arrow">&rarr;</span></a>
+                    </div>
+                </article>
+                <article class="project-card reveal">
+                    <div class="project-content">
+                        <span class="project-category">Machine Learning</span>
+                        <h3>Face Recognition Smart Attendance</h3>
+                        <p>A Flutter app that recognizes and records student faces in real time, reaching 97% accuracy with MTCNN for detection, FaceNet for feature extraction, and an SVM classifier.</p>
+                        <ul class="project-tech">
+                            <li>Flutter</li>
+                            <li>MTCNN</li>
+                            <li>FaceNet</li>
+                            <li>SVM</li>
+                        </ul>
+                        <a href="https://github.com/bijayashrestha11/Face-Recognition-Attendance-System" target="_blank" rel="noopener" class="project-link">View on GitHub <span class="arrow">&rarr;</span></a>
+                    </div>
+                </article>
+                <article class="project-card reveal">
+                    <div class="project-content">
+                        <span class="project-category">Machine Learning</span>
+                        <h3>Decision Tree Classifier from Scratch</h3>
+                        <p>Implemented a decision tree classifier from first principles in Python — 98% accuracy on a Covid-19 dataset and 87% on a social-media purchase dataset, with a study of how data volume shaped the results.</p>
+                        <ul class="project-tech">
+                            <li>Python</li>
+                            <li>NumPy</li>
+                            <li>Pandas</li>
+                        </ul>
+                        <a href="https://github.com/bijayashrestha11/Decision-Tree" target="_blank" rel="noopener" class="project-link">View on GitHub <span class="arrow">&rarr;</span></a>
+                    </div>
+                </article>
+                <article class="project-card reveal">
+                    <div class="project-content">
+                        <span class="project-category">Full-Stack Web</span>
+                        <h3>College Job &amp; Internship Portal</h3>
+                        <p>A MERN-stack platform connecting college students with job vacancies and internships, with listings, applications, and a clean React front end.</p>
+                        <ul class="project-tech">
+                            <li>MongoDB</li>
+                            <li>Express.js</li>
+                            <li>React.js</li>
+                            <li>Node.js</li>
+                        </ul>
+                        <a href="https://github.com/bijayashrestha11/Job-Hosting-Web-App" target="_blank" rel="noopener" class="project-link">View on GitHub <span class="arrow">&rarr;</span></a>
                     </div>
                 </article>
             </div>
         </div>
     </section>
 
-    <!-- Beyond the Data — Photography & Videography -->
-    <section id="gallery" class="gallery">
+    <!-- Photography tab -->
+    <section id="photography" class="gallery tab-panel">
         <div class="section-container">
             <h2 class="section-title reveal">Beyond the Data</h2>
             <p class="section-subtitle reveal">
@@ -278,91 +311,37 @@
 
             <h3 class="gallery-heading reveal">Photography</h3>
             <div class="gallery-grid">
-                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-1.jpg" data-caption="Untitled">
-                    <img src="assets/gallery/photo-1.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
-                    <span class="gallery-caption">Untitled</span>
+                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-1.jpg" data-caption="Shouldering the pack, Annapurna behind">
+                    <img src="assets/gallery/photo-1.jpg" alt="A trekker with a full backpack walking a high ridge, snow wall behind" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="gallery-caption">Shouldering the pack, Annapurna behind</span>
                 </button>
-                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-2.jpg" data-caption="Untitled">
-                    <img src="assets/gallery/photo-2.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
-                    <span class="gallery-caption">Untitled</span>
-                </button>
-                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-3.jpg" data-caption="Untitled">
-                    <img src="assets/gallery/photo-3.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
-                    <span class="gallery-caption">Untitled</span>
-                </button>
-                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-4.jpg" data-caption="Untitled">
-                    <img src="assets/gallery/photo-4.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
-                    <span class="gallery-caption">Untitled</span>
-                </button>
-                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-5.jpg" data-caption="Untitled">
-                    <img src="assets/gallery/photo-5.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
-                    <span class="gallery-caption">Untitled</span>
-                </button>
-                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-6.jpg" data-caption="Untitled">
-                    <img src="assets/gallery/photo-6.jpg" alt="Photograph by Bijaya" loading="lazy" onerror="this.classList.add('img-failed')" />
-                    <span class="gallery-caption">Untitled</span>
+                <button class="gallery-item reveal" type="button" data-full="assets/gallery/photo-2.jpg" data-caption="A pause among the pines">
+                    <img src="assets/gallery/photo-2.jpg" alt="A trekker in a blue jacket looking back on a rocky forest trail" loading="lazy" onerror="this.classList.add('img-failed')" />
+                    <span class="gallery-caption">A pause among the pines</span>
                 </button>
             </div>
 
             <h3 class="gallery-heading reveal">Videography</h3>
             <div class="video-grid">
-                <a class="video-card reveal" href="#" target="_blank" rel="noopener" aria-label="Play video">
+                <a class="video-card reveal" href="assets/trek/trek-video.mp4" target="_blank" rel="noopener" aria-label="Play the Annapurna trek film">
                     <div class="video-thumb">
-                        <img src="assets/gallery/video-1.jpg" alt="Video still" loading="lazy" onerror="this.classList.add('img-failed')" />
+                        <img src="assets/trek/trek-video.jpg" alt="A Himalayan valley village beneath snow peaks" loading="lazy" onerror="this.classList.add('img-failed')" />
                         <span class="video-play" aria-hidden="true">
                             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                         </span>
                     </div>
                     <div class="video-meta">
-                        <h4>Film title</h4>
-                        <p>Short description &middot; 2:30</p>
-                    </div>
-                </a>
-                <a class="video-card reveal" href="#" target="_blank" rel="noopener" aria-label="Play video">
-                    <div class="video-thumb">
-                        <img src="assets/gallery/video-2.jpg" alt="Video still" loading="lazy" onerror="this.classList.add('img-failed')" />
-                        <span class="video-play" aria-hidden="true">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </span>
-                    </div>
-                    <div class="video-meta">
-                        <h4>Film title</h4>
-                        <p>Short description &middot; 1:45</p>
+                        <h4>Morning over Manang</h4>
+                        <p>From the Annapurna trek &middot; 0:10</p>
                     </div>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Resume / CV -->
-    <section id="resume" class="resume">
-        <div class="section-container">
-            <h2 class="section-title reveal">Resume / CV</h2>
-            <p class="section-subtitle reveal">
-                The full story of my work, in one page. Download it or preview it in your browser.
-            </p>
-            <div class="resume-card reveal">
-                <div class="resume-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                        <line x1="8" y1="13" x2="16" y2="13"/>
-                        <line x1="8" y1="17" x2="16" y2="17"/>
-                        <line x1="8" y1="9" x2="10" y2="9"/>
-                    </svg>
-                </div>
-                <div class="resume-info">
-                    <h3>Bijaya — Data Engineer</h3>
-                    <p>PDF &middot; updated recently</p>
-                </div>
-                <div class="resume-actions">
-                    <a href="resume.pdf" download class="btn btn-primary">Download PDF</a>
-                    <a href="resume.pdf" target="_blank" rel="noopener" class="btn btn-secondary">Preview</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
+    <!-- Contact tab: FAQ + contact -->
+    <div class="tab-panel" id="contact">
     <!-- FAQ -->
     <section class="faq">
         <div class="section-container">
@@ -409,29 +388,50 @@
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="contact">
+    <section class="contact">
         <div class="section-container">
-            <h2 class="section-title reveal">Let's Build Something</h2>
-            <p class="contact-text">
-                Have a data challenge? I'd love to hear about it.<br>
-                Maybe I'm the engineer your data story needs.
-            </p>
-            <div class="contact-links">
-                <a href="mailto:bijaya@example.com" class="contact-link reveal">
-                    <span class="contact-label">Email</span>
-                    <span class="contact-value">bijaya@example.com</span>
+            <div class="contact-inner">
+                <div class="contact-intro">
+                    <h2 class="section-title reveal">Let's Build Something</h2>
+                    <p class="contact-text">
+                        Have a data challenge? I'd love to hear about it.<br>
+                        Maybe I'm the engineer your data story needs.
+                    </p>
+                </div>
+                <div class="contact-links">
+                <a href="mailto:shrestha.bj2056@gmail.com" class="contact-link reveal" aria-label="Email Bijaya" title="shrestha.bj2056@gmail.com">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
                 </a>
-                <a href="https://linkedin.com" target="_blank" class="contact-link reveal">
-                    <span class="contact-label">LinkedIn</span>
-                    <span class="contact-value">Connect with me</span>
+                <a href="https://www.linkedin.com/in/bijaya-shrestha-9b0800248/" target="_blank" rel="noopener" class="contact-link reveal" aria-label="LinkedIn profile" title="Connect on LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+                    </svg>
                 </a>
-                <a href="https://github.com" target="_blank" class="contact-link reveal">
-                    <span class="contact-label">GitHub</span>
-                    <span class="contact-value">View my code</span>
+                <a href="https://github.com/bijayashrestha11" target="_blank" rel="noopener" class="contact-link reveal" aria-label="GitHub profile" title="View my code on GitHub">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.06-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.39 1.24-3.23-.13-.3-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.25 2.88.12 3.18.77.84 1.23 1.92 1.23 3.23 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.21.7.82.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/>
+                    </svg>
                 </a>
+                <a href="tel:+9779861304754" class="contact-link reveal" aria-label="Call Bijaya" title="+977 9861304754">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="contact-link reveal" aria-label="Instagram profile" title="Follow on Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+                    </svg>
+                </a>
+                </div>
             </div>
         </div>
     </section>
+    </div><!-- /#contact tab -->
 
     <!-- Footer -->
     <footer class="footer">

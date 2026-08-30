@@ -7,7 +7,7 @@
     --color-bg: #fafafa;
     --color-bg-alt: #ffffff;
     --color-text: #1a1a1a;
-    --color-text-muted: #666666;
+    --color-text-muted: #374151;  /* single prose shade used for ALL body text */
     /* --- Brand / signature color: sampled from the profile photo (#f9c809) ---
        Bright yellow, so text/thin accents on the light bg use a deeper amber for
        readability; fills & glows use the true photo yellow. Dark theme brightens
@@ -23,7 +23,9 @@
     --color-border: #e5e5e5;
     --color-card-bg: #ffffff;
 
-    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    /* Instrument Sans — the same typeface the reference site uses (via next/font),
+       loaded from Google Fonts with a system-sans fallback. */
+    --font-primary: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
 
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
@@ -31,7 +33,7 @@
     --spacing-lg: 4rem;
     --spacing-xl: 6rem;
 
-    --max-width: 1200px;
+    --max-width: 42rem;   /* 672px — the reference's prose column width */
     --border-radius: 12px;
 
     --transition-fast: 0.2s ease;
@@ -58,7 +60,7 @@ html {
 body {
     font-family: var(--font-primary);
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.75;   /* reference-style roomy prose spacing */
     color: var(--color-text);
     background-color: var(--color-bg);
     -webkit-font-smoothing: antialiased;
@@ -86,9 +88,10 @@ h1, h2, h3, h4 {
     letter-spacing: -0.02em;
 }
 
-h1 { font-size: clamp(3rem, 8vw, 5rem); }
-h2 { font-size: clamp(2rem, 4vw, 2.5rem); }
-h3 { font-size: 1.25rem; }
+/* Reference type scale: headings barely larger than body — prose-first */
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1.125rem; }
 
 p {
     color: var(--color-text-muted);
@@ -125,7 +128,7 @@ p {
 
 .nav-links {
     display: flex;
-    gap: var(--spacing-md);
+    gap: 1.25rem;
 }
 
 .nav-links a {
@@ -233,11 +236,336 @@ p {
    HERO SECTION
    ========================================== */
 .hero {
-    min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: var(--spacing-xl) var(--spacing-md);
-    padding-top: calc(var(--spacing-xl) + 60px);
+    padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xl);
+    padding-top: calc(var(--spacing-lg) + 72px);
+}
+
+/* ==========================================
+   TAB PANELS — single-view navigation
+   Only the active tab is shown; nav switches between them.
+   ========================================== */
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+    animation: tabFade 0.45s var(--ease-out);
+}
+
+@keyframes tabFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ==========================================
+   ABOUT (Home) — personal, minimal, reference-style
+   ========================================== */
+/* Reference layout: small rounded-square avatar stacked above a modest heading */
+.about-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.about-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--color-border);
+}
+
+.about-avatar.img-failed {
+    background: var(--color-accent-bright);
+}
+
+.about-greeting {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-text);
+    margin: 0 0 0.15rem;
+}
+
+.about-greeting .wave {
+    display: inline-block;
+}
+
+.about-role {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+/* Body copy sized like the reference — everything reads at base 1rem,
+   and every paragraph shares the same shade (no light/dark mixing) */
+.about-lead {
+    font-size: 1rem;
+    line-height: 1.75rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+}
+
+.about-para {
+    font-size: 1rem;
+    line-height: 1.75rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+}
+
+.about-subhead {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: var(--spacing-lg) 0 var(--spacing-sm);
+}
+
+.about-note {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-sm);
+}
+
+.about-note a {
+    color: var(--color-accent);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.about-note a:hover {
+    border-color: var(--color-accent);
+}
+
+/* Photo / video slots — leave room for images to be dropped in later */
+.about-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+    margin: var(--spacing-md) 0;
+}
+
+.about-gallery.treks {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.photo-slot {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-slot img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.photo-slot img.img-failed {
+    display: none;
+}
+
+.photo-slot video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.photo-hint {
+    position: relative;
+    z-index: 0;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: 0 0.5rem;
+}
+
+.video-slot .photo-play {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-slot .photo-play svg {
+    width: 20px;
+    height: 20px;
+    margin-left: 2px;
+}
+
+/* Connect row — LinkedIn / Instagram / Email on the first page */
+.about-connect {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+}
+
+.about-connect-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-text-muted);
+}
+
+.connect-icons {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.connect-link {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    transition: transform var(--transition-medium),
+                color var(--transition-fast),
+                background var(--transition-fast),
+                border-color var(--transition-fast);
+}
+
+.connect-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.connect-link:hover,
+.connect-link:focus-visible {
+    transform: translateY(-3px);
+    color: var(--on-accent);
+    background: var(--color-accent-bright);
+    border-color: var(--color-accent-bright);
+    outline: none;
+}
+
+@media (max-width: 640px) {
+    .about-gallery,
+    .about-gallery.treks {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==========================================
+   WORK — narrative, reference-style entries
+   ========================================== */
+.work-entry {
+    margin-bottom: var(--spacing-lg);
+}
+
+.work-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.1rem;
+}
+
+.work-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    object-fit: contain;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    flex-shrink: 0;
+}
+
+/* Lettermark fallback when a company has no usable logo */
+.work-logo-mono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--on-accent);
+    background: var(--color-accent-bright);
+    border-color: var(--color-accent-bright);
+}
+
+.work-company {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.work-role {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-sm);
+}
+
+.work-points li {
+    position: relative;
+    padding-left: 1.15rem;
+    font-size: 1rem;
+    line-height: 1.75rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.6rem;
+}
+
+.work-points li::before {
+    content: "";
+    position: absolute;
+    left: 0.15rem;
+    top: 0.75rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-accent-bright);
+}
+
+.work-points li strong {
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.work-more {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-lg);
+}
+
+.work-more a {
+    color: var(--color-accent);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.work-more a:hover {
+    border-color: var(--color-accent);
 }
 
 .hero-content {
@@ -438,23 +766,23 @@ p {
 }
 
 .section-title {
-    text-align: center;
-    margin-bottom: var(--spacing-sm);
+    text-align: left;
+    margin-bottom: var(--spacing-xs);
     color: var(--color-text);
 }
 
 .section-subtitle {
-    text-align: center;
-    font-size: 1.125rem;
-    max-width: 600px;
-    margin: 0 auto var(--spacing-lg);
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.75rem;
+    margin: 0 0 var(--spacing-lg);
 }
 
 /* ==========================================
    SKILLS SECTION
    ========================================== */
 .skills {
-    background: var(--color-bg-alt);
+    background: var(--color-bg);
 }
 
 .skills-grid {
@@ -557,7 +885,7 @@ p {
    PROJECTS SECTION
    ========================================== */
 .projects {
-    background: var(--color-bg-alt);
+    background: var(--color-bg);
 }
 
 .projects-grid {
@@ -700,11 +1028,159 @@ p {
     flex-shrink: 0;
 }
 
+/* --- Full CV rendered as HTML --- */
+.resume-doc {
+    max-width: 760px;
+    margin: var(--spacing-lg) auto 0;
+    padding: var(--spacing-lg);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    text-align: left;
+}
+
+.resume-doc-header {
+    text-align: center;
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: var(--spacing-md);
+}
+
+.resume-doc-name {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--color-text);
+    margin-bottom: 0.35rem;
+}
+
+.resume-doc-contact {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.resume-doc-contact a {
+    color: var(--color-accent);
+    transition: color var(--transition-fast);
+}
+
+.resume-doc-contact a:hover {
+    color: var(--color-accent-hover);
+}
+
+.resume-block {
+    margin-bottom: var(--spacing-md);
+}
+
+.resume-block:last-child {
+    margin-bottom: 0;
+}
+
+.resume-block-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-accent);
+    padding-bottom: 0.4rem;
+    margin-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.resume-block > p {
+    color: var(--color-text-muted);
+}
+
+.resume-entry {
+    margin-bottom: var(--spacing-sm);
+}
+
+.resume-entry:last-child {
+    margin-bottom: 0;
+}
+
+.resume-entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.resume-entry h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.resume-date {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.resume-entry-sub {
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--color-text-muted);
+    margin: 0.1rem 0 0.35rem;
+}
+
+.resume-entry-detail {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin: 0.2rem 0 0;
+}
+
+.resume-entry ul,
+.resume-block > ul,
+.resume-skills {
+    list-style: none;
+    padding: 0;
+    margin: 0.35rem 0 0;
+}
+
+.resume-entry ul li,
+.resume-block > ul li,
+.resume-skills li {
+    position: relative;
+    padding-left: 1.15rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.3rem;
+    line-height: 1.5;
+}
+
+.resume-entry ul li::before,
+.resume-block > ul li::before,
+.resume-skills li::before {
+    content: "";
+    position: absolute;
+    left: 0.15rem;
+    top: 0.6rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-accent-bright);
+}
+
+.resume-skills li strong {
+    color: var(--color-text);
+    font-weight: 600;
+}
+
 /* ==========================================
    GALLERY — Photography & Videography
    ========================================== */
 .gallery {
-    background: var(--color-bg-alt);
+    background: var(--color-bg);
 }
 
 .gallery-heading {
@@ -995,13 +1471,22 @@ p {
     .resume-actions .btn {
         width: 100%;
     }
+
+    .resume-doc {
+        padding: var(--spacing-md);
+    }
+
+    .resume-entry-head {
+        flex-direction: column;
+        gap: 0.1rem;
+    }
 }
 
 /* ==========================================
    FAQ SECTION
    ========================================== */
 .faq {
-    background: var(--color-bg-alt);
+    background: var(--color-bg);
 }
 
 .faq-list {
@@ -1066,61 +1551,89 @@ p {
 /* ==========================================
    CONTACT SECTION
    ========================================== */
+/* Contact sits on the same canvas as every other tab — no dark band,
+   so text shades stay identical across the whole site */
 .contact {
-    background: var(--color-text);
-    color: var(--color-bg);
+    background: var(--color-bg);
+    color: var(--color-text);
 }
 
 .contact .section-title {
-    color: var(--color-bg);
+    color: var(--color-text);
 }
 
-.contact-text {
-    text-align: center;
-    font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: var(--spacing-lg);
-}
-
-.contact-links {
+/* Two-column: invitation text on the left, small icon cluster on the right */
+.contact-inner {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
     gap: var(--spacing-lg);
     flex-wrap: wrap;
 }
 
+.contact-intro {
+    flex: 1;
+    min-width: 260px;
+}
+
+.contact-intro .section-title {
+    text-align: left;
+    margin-bottom: var(--spacing-sm);
+}
+
+.contact-text {
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.75rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0;
+}
+
+.contact-links {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
 .contact-link {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: var(--spacing-md);
-    transition: transform var(--transition-fast);
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: transparent;
+    transition: transform var(--transition-medium),
+                color var(--transition-fast),
+                background var(--transition-fast),
+                border-color var(--transition-fast),
+                box-shadow var(--transition-medium);
 }
 
-.contact-link:hover {
-    transform: translateY(-5px);
+.contact-link svg {
+    width: 20px;
+    height: 20px;
 }
 
-.contact-label {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: var(--spacing-xs);
-}
-
-.contact-value {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-bg);
+.contact-link:hover,
+.contact-link:focus-visible {
+    transform: translateY(-4px);
+    color: var(--on-accent);
+    background: var(--color-accent-bright);
+    border-color: var(--color-accent-bright);
+    box-shadow: 0 10px 24px rgba(var(--accent-rgb), 0.35);
+    outline: none;
 }
 
 /* ==========================================
    FOOTER
    ========================================== */
 .footer {
-    background: var(--color-text);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
 }
 
 .footer-container {
@@ -1132,7 +1645,7 @@ p {
 
 .footer p {
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-text-muted);
 }
 
 /* ==========================================
@@ -1300,14 +1813,19 @@ p {
         grid-template-columns: 1fr;
     }
 
-    .contact-links {
+    .contact-inner {
         flex-direction: column;
-        align-items: center;
-        gap: var(--spacing-sm);
+        text-align: center;
+        gap: var(--spacing-md);
     }
 
-    .contact-link {
-        padding: var(--spacing-sm);
+    .contact-intro .section-title,
+    .contact-text {
+        text-align: center;
+    }
+
+    .contact-links {
+        justify-content: center;
     }
 
     .hero-cta {
@@ -1364,16 +1882,8 @@ p {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-[data-theme="dark"] .contact,
-[data-theme="dark"] .footer {
-    background: #141414;
-}
-
-/* Contact is a dark section in both modes, so keep its text light */
-[data-theme="dark"] .contact .section-title,
-[data-theme="dark"] .contact-value {
-    color: #fafafa;
-}
+/* Contact and footer share the page canvas in both themes —
+   text shades stay identical across the whole site */
 
 /* ==========================================
    REDUCED MOTION — respect user preference
